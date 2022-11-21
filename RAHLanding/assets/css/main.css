@@ -1,0 +1,150 @@
+
+html {font-family: 'Inter', sans-serif;background-color:#FFF}
+body {font-family: 'Inter', sans-serif;overflow-x: hidden; background-color:#FFF; font-weight:400;font-style: normal; color:#000; font-size:14px}
+a,a:hover,a:focus,i,input,button,input:focus,.transition {text-decoration: none;outline: none;transition-delay: 0s;transition-duration: 0.4s;transition-property: all;transition-timing-function: ease;box-shadow: none;}
+a{color: #000}
+iframe {border: 0;outline: none;}
+::-moz-selection {background:#000;text-shadow: none;color:#FFF}
+::selection {background:#000;text-shadow: none;color:#FFF}
+img {max-width: 100%;border: none;outline: none;height: auto;}
+input,textarea {border-radius: 0;resize: none;}
+ul {padding: 0;margin: 0;}
+@font-face {
+font-family: 'Inter', sans-serif;}
+input:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill {background-color: transparent;background-image: none;color:#000;}
+/* 1.2 Typography */
+h1,h2,h3,h4,h5,h6 {font-family: 'Inter', sans-serif;}
+figure{ margin: 0 }
+svg,img { max-width: 100%; height: auto; }
+/*-----------------------------------------------------------------
+  1. >>> Headr Style
+----------------------------------------------------------------*/
+.ds-logo{ font-size: 30px; font-weight: 700; color: #000; padding: 35px 0;display: inline-block; }
+/*-------------------------------------------------------------------------------
+  2. >>> Banner Style
+-------------------------------------------------------------------------------*/
+.ds-banner{ background-color: #D4F7F1; padding: 100px;padding-right: 340px; padding-bottom: 62px; }
+.ds-main-heading{ font-size: 48px; line-height: 56px; margin-bottom: 40px; }
+.ds-banner p,.ds-book-content p,.ds-book-list p{ font-size: 16px; line-height: 30px; margin-bottom: 38px;}
+.ds-buttan2{ font-size: 14px; font-weight: 700; letter-spacing: 1px; color: #000; text-transform:uppercase; padding:19px 49px; background-color: #FFFFFF; border-radius: 30px; display: inline-block; }
+.ds-buttan{ font-size: 14px; font-weight: 700; letter-spacing: 1px; color: #FFF; text-transform:uppercase; padding:19px 49px; background-color: #FF9900; border-radius: 30px; display: inline-block; }
+.ds-buttan:hover{ background-color: #000; color: #FFF; }
+.ds-banner p strong{ font-weight: 500; }
+.ds-banner .ds-buttan{ margin-bottom: 30px; }
+.ds-banner-section .row{ position: relative; }
+.ds-banner-section figure{ position: absolute; right: 0; top: 50%; transform: translateY(-50%);width: 440px; }
+/*-------------------------------------------------------------------------------
+  3. >>> Book Style
+-------------------------------------------------------------------------------*/
+.ds-book-section{ padding-top: 120px; }
+.ds-sub-heading{ font-size: 36px; line-height: 44px; margin-bottom: 30px;font-weight: 700; }
+.ds-book-content p{ margin-bottom: 0; }
+.ds-book-content ul{ list-style: none; padding:0; margin: 0; margin-left: 15px; }
+.ds-book-content ul li{ color:#2B2B2B; font-size: 20px; line-height: 30px; position: relative; padding-left: 60px; margin-bottom: 40px; }
+.ds-book-content ul li span{ color: #FF9900; font-weight: 700; font-size: 30px; line-height: 36px; position: absolute; left: 0; }
+.ds-book-content ul li:last-child{ margin-bottom: 0; }
+
+.ds-book-listing-section{ padding-top: 107px; }
+.ds-book-list{ margin-bottom: 112px; }
+.ds-book-list figure{ width: 440px; }
+.ds-book-list:nth-child(2n+2) .ds-book-list-img{ order: 2;display: flex;justify-content: flex-end; }
+/*-------------------------------------------------------------------------------
+  4. >>> About Style
+-------------------------------------------------------------------------------*/
+.ds-about-section{ padding-top: 8px; padding-bottom: 120px; }
+.ds-about-content{ padding-left: 70px; }
+.ds-about-content .ds-sub-heading{ margin-bottom: 54px;  }
+.ds-about-content p{ font-weight: 500; font-size: 20px; line-height: 30px; margin-bottom: 30px; }
+
+.ds-about-info{ padding-top: 94px; }
+.ds-about-info span{ display: block; font-size: 22px; line-height: 36px; }
+.ds-about-info a{ font-weight: 700; color: #000; }
+.ds-about-info a:hover{ color:#495EEE ; color: #FFF; }
+/*-------------------------------------------------------------------------------
+  5. >>> Reviews Style
+-------------------------------------------------------------------------------*/
+.ds-reviews-section{ padding-bottom: 120px; }
+.ds-reviews-section header{ text-align: center; width: 970px; margin: auto; }
+.ds-reviews-section header .ds-sub-heading{ margin-bottom: 30px; }
+.ds-reviews-section header p{ font-size: 16px; line-height: 30px; }
+
+.reviews-list-section{ padding-top:70px; }
+.ds-reviews-loop{ display: flex; }
+.ds-reviews-list{ background-color: #FFF7E0; padding: 52px 40px; padding-bottom: 38px; }
+.ds-reviews-list p{ color: #2B2B2B; font-size: 16px; line-height: 30px; }
+.ds-reviews-name{ display: block; color: #2B2B2B; font-size: 16px; font-weight: 600; }
+.ds-reviews-org{ display: block; color: #2B2B2B; font-size: 16px; }
+.ds-rating{ display: flex; font-size: 20px; color: #F0C036; margin-top: 20px; margin-bottom: 18px; }
+
+/*-------------------------------------------------------------------------------
+  6. >>> Book ADD Style
+-------------------------------------------------------------------------------*/
+.ds-book-add-section{ text-align: center; background-color: #ECF6FE; padding: 120px 0; }
+.ds-book-add-section span{ font-weight: 700; text-transform: uppercase; font-size: 16px; }
+.ds-book-add-section h2{font-weight: 700; font-size: 60px; line-height: 70px; margin-top: 40px; margin-bottom: 80px;}
+
+/*-------------------------------------------------------------------------------
+  7. >>> Footer Style
+-------------------------------------------------------------------------------*/
+.ds-footer{ text-align: center; padding: 90px 0; font-size: 16px; color: #000; font-weight: 700; }
+.ds-footer a{ color: #000; }
+.ds-footer a:hover{ color:#495EEE ; }
+
+
+
+
+
+
+
+
+
+/*-------------------------------------------------------------------------------
+ Responsive XS Style @media (max-width: 767px) 
+-------------------------------------------------------------------------------*/
+@media (max-width: 768px) {
+  .ds-header-inner{ text-align: center; }
+  .ds-logo{ padding: 25px 0; }
+  .ds-banner{ padding: 40px; }
+  .ds-banner-section figure{ position: static;transform: none; }
+  .ds-main-heading{ font-size: 40px; line-height: 43px;margin-bottom: 30px; }
+  .ds-main-heading br{ display: none; }
+  .ds-banner p, .ds-book-content p, .ds-book-list p{ margin-bottom: 20px; }
+  .ds-banner-section .col-12{ order: 2; margin-top: 30px; }
+  .ds-book-section,.ds-book-listing-section{ padding-top: 60px; }
+  .ds-sub-heading{ font-size: 30px; line-height: 32px; margin-bottom: 15px; }
+  .ds-book-content ul li{ font-size: 16px; line-height: 20px; }
+  .ds-book-content ul{ margin-left: 0; margin-top:10px; }
+  .ds-book-list figure{ margin-bottom: 30px; }
+  .ds-book-list{ margin-bottom:40px; }
+  .ds-book-list:nth-child(2n+2) .ds-book-list-img{ order: 1; }
+  .ds-book-list:nth-child(2n+2) .ds-book-list-content{ order: 2; }
+  .ds-about-content{ padding-left: 0; padding-top: 40px; }
+  .ds-about-content p{ font-size: 16px; line-height: 30px;margin-bottom: 10px; }
+  .ds-about-content .ds-sub-heading {margin-bottom: 20px;}
+  .ds-about-info {padding-top: 0;}
+  .ds-about-section{ padding-bottom: 60px; }
+  .ds-reviews-section header .ds-sub-heading {margin-bottom: 15px;}
+  .reviews-list-section {padding-top: 20px;}
+  .ds-reviews-loop{ margin-bottom: 40px; }
+  .ds-reviews-section{ padding-bottom: 30px; }
+  .ds-book-add-section{ padding: 60px 20px; }
+  .ds-book-add-section h2{ font-size: 40px; line-height: 45px;margin-bottom: 50px; }
+  .ds-book-add-section h2 br{ display: none; }
+  .ds-footer{ padding: 40px 15px; }
+
+  .ds-banner-section,.ds-book-section,.ds-about-section,.ds-reviews-section{ padding-left: 12px; padding-right: 12px; }
+  .ds-reviews-section header,.ds-banner-section figure,.ds-book-list figure{ width: 100%; }
+}
+
+
+@media (min-width: 768px) and (max-width: 991px) {
+
+.ds-banner-section .col-12,.ds-book-section .col-md-10{ width: 100%; }
+
+}
+
+@media (min-width: 992px) and (max-width: 1199px) {
+  .ds-banner{ padding-left: 30px; padding-top: 40px; padding-bottom: 40px; padding-right: 290px; }
+  .ds-book-list figure {width: 100%;}
+  .ds-main-heading br{ display: none; }
+}
