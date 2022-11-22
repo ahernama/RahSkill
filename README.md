@@ -2,7 +2,7 @@
 
 <img src="RAHLanding/assets/images/banner_Alexa.jpg" />
 
-Skill implementada para Amazon Alexa en colaboración con Real Academia de la Historia de España y Amazon Web Services utilizando la versión 2.1 de su SDK. Implementación para la distribución en su store en Español, se puede utilizar como template para implementar juegos educativos similares.
+[Skill implementada para Amazon Alexa en colaboración con Real Academia de la Historia de España y Amazon Web Services](http://rahskilllanding.com.s3-website.eu-south-2.amazonaws.com) utilizando la versión 2.1 de su SDK. Implementación para la distribución en su store en Español, se puede utilizar como template para implementar juegos educativos similares.
 
 ## Sobre la Skill
 
