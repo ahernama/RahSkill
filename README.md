@@ -1,6 +1,6 @@
 # Alexa Skill - El Desafio de la Historia
 
-<img src="https://i.ytimg.com/vi/VdJwx6fwxAs/maxresdefault.jpg" />
+<img src="RAHLanding/assets/images/banner_Alexa.jpg" />
 
 Skill implementada para Amazon Alexa en colaboración con Real Academia de la Historia de España y Amazon Web Services utilizando la versión 2.1 de su SDK. Implementación para la distribución en su store en Español, se puede utilizar como template para implementar juegos educativos similares.
 
