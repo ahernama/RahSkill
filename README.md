@@ -38,7 +38,7 @@ Alexa, hazme una pregunta al azar
 
     MIT License
 
-    Copyright (c) 2018 Alex Hernández
+    Copyright (c) 2022 Alex Hernández
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
