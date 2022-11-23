@@ -5,7 +5,6 @@
       "category": "KNOWLEDGE_AND_TRIVIA",
       "distributionCountries": [],
       "isAvailableWorldwide": true,
-      "isShoppingActionsEnabled":false,
       "locales": {
         "es-ES": {
           "description": "Prueba tus conocimientos sobre la historia de España con este divertido Quiz en el que Alexa te desafiará preguntándote sobre alguna de las fechas más importantes de nuestra historia.",
@@ -24,8 +23,8 @@
           ],
           "name": "El desafio de la historia",
           "summary": "Descubre el desafío de la Real Academia de la Historia y Alexa",
-          "smallIconUri":"file://Icon_skill_small.jpg",
-          "largeIconUri":"file://icon_skill_big.jpg"
+          "smallIconUri":"file://assets/images/iconskillsmall.png",
+          "largeIconUri":"file://assets/images/iconskillbig.png"
         }
       },
       "testingInstructions": "Our skill is basically a quiz that will ask our users 5-10 questions about history in Spain. We will tailor our questions based on the age of the users to be able to adapt the content and avoid frustration. This skill was developed in collaboration with \"Real Academia de la Historia\" in Spain."
@@ -35,7 +34,7 @@
       "locales": {
         "es-ES": {
           "privacyPolicyUrl": "http://rahskilllanding.com.s3-website.eu-south-2.amazonaws.com/",
-          "termsOfUseUrl":"http://rahskilllanding.com.s3-website.eu-south-2.amazonaws.com/",
+          "termsOfUseUrl":"http://rahskilllanding.com.s3-website.eu-south-2.amazonaws.com/"
         }
       },
       "containsAds": false,
@@ -55,26 +54,26 @@
               {
                 "mode": "HUB",
                 "shape": "ROUND",
-                "minWidth": 480,
-                "maxWidth": 480,
-                "minHeight": 480,
-                "maxHeight": 480
+                "minHeight": 100,
+                "maxHeight": 599,
+                "minWidth": 100,
+                "maxWidth": 599
               },
               {
                 "mode": "HUB",
                 "shape": "RECTANGLE",
-                "minWidth": 1024,
-                "maxWidth": 1024,
                 "minHeight": 600,
-                "maxHeight": 600
+                "maxHeight": 959,
+                "minWidth": 960,
+                "maxWidth": 1279
               },
               {
                 "mode": "HUB",
                 "shape": "RECTANGLE",
+                "minHeight": 600,
+                "maxHeight": 1279,
                 "minWidth": 1280,
-                "maxWidth": 1280,
-                "minHeight": 800,
-                "maxHeight": 800
+                "maxWidth": 1920
               },
               {
                 "mode": "TV",
@@ -87,11 +86,11 @@
               {
                 "mode": "HUB",
                 "shape": "RECTANGLE",
+                "minHeight": 100,
+                "maxHeight": 599,
                 "minWidth": 960,
-                "maxWidth": 960,
-                "minHeight": 480,
-                "maxHeight": 480
-              }
+                "maxWidth": 1279
+                }
             ]
           }
         ]
