@@ -1,7 +1,7 @@
 {
   "interactionModel": {
     "languageModel": {
-      "invocationName": "El desafio de la historia",
+      "invocationName": "el desafio de la historia",
       "intents": [
         {
           "name": "AMAZON.CancelIntent",
@@ -35,6 +35,9 @@
           "name": "AMAZON.StopIntent",
           "samples": [
             "salir",
+            "parar el juego",
+            "para el juego",
+            "apágate",
             "stop"
           ]
         },

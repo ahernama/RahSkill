@@ -1,31 +1,101 @@
 {
   "manifest": {
-    "apis": {
-      "custom": {
-        "endpoint": {
-          "uri": "arn:aws:lambda:us-east-1:318883658404:function:ReflectorTemplateSkill"
-        }
-      }
-    },
     "manifestVersion": "1.0",
     "publishingInformation": {
       "category": "KNOWLEDGE_AND_TRIVIA",
       "distributionCountries": [],
       "isAvailableWorldwide": true,
+      "isShoppingActionsEnabled":false,
       "locales": {
         "es-ES": {
-          "description": "Sample Full Description",
+          "description": "Prueba tus conocimientos sobre la historia de España con este divertido Quiz en el que Alexa te desafiará preguntándote sobre alguna de las fechas más importantes de nuestra historia.",
           "examplePhrases": [
-            "Alexa abre hola mundo",
-            "hola",
-            "ayuda"
+            "Alexa abre el desafío de la historia",
+            "Alexa pregúntame algo al azar",
+            "Alexa necesito tu ayuda"
           ],
-          "keywords": [],
+          "keywords": [
+            "Historia",
+            "fechas",
+            "juego",
+            "reto",
+            "colegio",
+            "educacion"
+          ],
           "name": "El desafio de la historia",
-          "summary": "Sample Short Description"
+          "summary": "Descubre el desafío de la Real Academia de la Historia y Alexa",
+          "smallIconUri":"file://Icon_skill_small.jpg",
+          "largeIconUri":"file://icon_skill_big.jpg"
         }
       },
-      "testingInstructions": "Sample Testing Instructions."
+      "testingInstructions": "Our skill is basically a quiz that will ask our users 5-10 questions about history in Spain. We will tailor our questions based on the age of the users to be able to adapt the content and avoid frustration. This skill was developed in collaboration with \"Real Academia de la Historia\" in Spain."
+    },
+    "privacyAndCompliance": {
+      "allowsPurchases": false,
+      "locales": {
+        "es-ES": {
+          "privacyPolicyUrl": "http://rahskilllanding.com.s3-website.eu-south-2.amazonaws.com/",
+          "termsOfUseUrl":"http://rahskilllanding.com.s3-website.eu-south-2.amazonaws.com/",
+        }
+      },
+      "containsAds": false,
+      "isExportCompliant": true,
+      "isChildDirected": false,
+      "usesPersonalInfo": false
+    },
+    "apis": {
+      "custom": {
+        "endpoint": {
+          "uri": "arn:aws:lambda:eu-west-1:482462292993:function:RAHAlexaSkill"
+        },
+        "interfaces": [
+          {
+            "type": "ALEXA_PRESENTATION_APL",
+            "supportedViewports": [
+              {
+                "mode": "HUB",
+                "shape": "ROUND",
+                "minWidth": 480,
+                "maxWidth": 480,
+                "minHeight": 480,
+                "maxHeight": 480
+              },
+              {
+                "mode": "HUB",
+                "shape": "RECTANGLE",
+                "minWidth": 1024,
+                "maxWidth": 1024,
+                "minHeight": 600,
+                "maxHeight": 600
+              },
+              {
+                "mode": "HUB",
+                "shape": "RECTANGLE",
+                "minWidth": 1280,
+                "maxWidth": 1280,
+                "minHeight": 800,
+                "maxHeight": 800
+              },
+              {
+                "mode": "TV",
+                "shape": "RECTANGLE",
+                "minWidth": 960,
+                "maxWidth": 960,
+                "minHeight": 540,
+                "maxHeight": 540
+              },
+              {
+                "mode": "HUB",
+                "shape": "RECTANGLE",
+                "minWidth": 960,
+                "maxWidth": 960,
+                "minHeight": 480,
+                "maxHeight": 480
+              }
+            ]
+          }
+        ]
+      }
     }
   }
 }
