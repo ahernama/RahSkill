@@ -67,16 +67,45 @@ module.exports = {
       hint, speechText, img, false);
   },
 
-  getAplListOrVoice(handlerInput, title, list, hint, speechText) {
+  getAplQuestion(handlerInput, question, category, options, speechText) {
     if (handlerInput.requestEnvelope.context.System.device.supportedInterfaces['Alexa.Presentation.APL']) {
       /* si hay soporte APL... */
-      const docu = require('./documentListado.json'); // eslint-disable-line global-require
-      const d = require('./myDataSourceListado.json'); // eslint-disable-line global-require
+      const docu = require('./documentQuestion.json'); 
+      const d = require('./myDataSourceQuestion.json'); 
 
-      d.listTemplate1Metadata.title = title;
-      d.listTemplate1ListData.listItems = list;
-      d.listTemplate1Metadata.hintText = hint;
+      d.multipleChoiceTemplateData.properties.choices = options;
+      d.multipleChoiceTemplateData.properties.primaryText = question;
+      d.multipleChoiceTemplateData.properties.titleText =  category;
 
+      return handlerInput.responseBuilder
+        .speak(speechText)
+        .reprompt(speechText)
+        .addDirective({
+          type: 'Alexa.Presentation.APL.RenderDocument',
+          version: '1.0',
+          document: docu,
+          datasources: d,
+        })
+        .getResponse();
+    }
+
+    return handlerInput.responseBuilder
+      .speak(speechText)
+      .reprompt(speechText)
+      .withSimpleCard(title, speechText)
+      .getResponse();
+  },
+
+  getAplTitle(handlerInput, titleSkill, descSkill, nextStep, speechText) {
+    if (handlerInput.requestEnvelope.context.System.device.supportedInterfaces['Alexa.Presentation.APL']) {
+      /* si hay soporte APL... */
+      const docu = require('./documentTitle.json'); 
+      const d = require('./myDataSourceTitle.json'); 
+
+      d.simpleTextTemplateData.properties.titleText = titleSkill;
+      d.simpleTextTemplateData.properties.primaryText = descSkill;
+      d.simpleTextTemplateData.properties.hintText = nextStep;
+      
       return handlerInput.responseBuilder
         .speak(speechText)
         .reprompt(speechText)

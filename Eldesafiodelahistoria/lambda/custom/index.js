@@ -3,60 +3,50 @@
 const Alexa = require('ask-sdk-core');
 const AplTemplates = require('./apl/aplTemplates');
 const SessionState = require('./data/sessionState');
+
 const GlobalHandlers = require('./handlers/globalHandlers'); // ErrorHandler, SessionEnded...
-const dynamicEntitiesHandlers = require('./handlers/dynamicEntitiesIntentHandlers');
+const AplUserEventHandler = require('./handlers/aplUserEventHandler');
 
 const preguntas = require('./data/preguntas-trivial');
-
 
 function capitalizeFirstLetter(s) {
   return s.charAt(0).toUpperCase() + s.slice(1);
 }
 
-
-/**
-  * @desc convierte una pregunta (enunciado y sus N opciones) en una única cadena de texto
-  * @param pregunta $pregunta
-  * @return string - texto listo para ser pronunciado por Alexa, incluye pregunta final.
-*/
 function preguntaToString(pregunta) {
   let ret = `${capitalizeFirstLetter(pregunta.enunciado)} `;
   for (let i = 0; i < pregunta.respuestas.length; i += 1) {
     ret += `${String.fromCharCode('A'.charCodeAt() + i)}: ${capitalizeFirstLetter(pregunta.respuestas[i].respuesta)}. <break time="1s"/>`;
   }
-
-  /* Importante terminar con una pregunta, para que el usuario sepa
-    que tiene que contestar y para que Amazon certifique la Skill. */
   ret += ' ¿Qué letra eliges?';
-
   return ret;
 }
 
+function respuestasToArray(pregunta) {
+  var options = ["test","test","test3"];
+  for (let i = 0; i < pregunta.respuestas.length; i += 1) {
+    options[i] = pregunta.respuestas[i].respuesta;
+  }
+  return options;
+}
 
-/**
-  * @desc devuelve un item aleatorio del array
-  * @param array $arrayOfItems
-  * @return object - item aleatorio.
-*/
 function getRandomItem(arrayOfItems) {
   let i = 0;
   i = Math.floor(Math.random() * arrayOfItems.length);
   return (arrayOfItems[i]);
 }
 
-
-function getRandomQuestionSpeechAndSave(handlerInput) {
-  const oneQuestion = getRandomItem(preguntas.PREGUNTAS);
-  SessionState.setCurrentQuestion(handlerInput, oneQuestion);
-
-  const catName = preguntas.CATEGORIAS.filter(one => one.id === oneQuestion.categoria)[0].nombre;
-
-  let speechText = `Pregunta de ${catName}. `;
-  speechText += preguntaToString(oneQuestion);
-
+function getCategoriaName(pregunta){
+  const catName = preguntas.CATEGORIAS.filter(one => one.id === pregunta.categoria)[0].nombre;
+  let speechText = `${catName}.`;
   return speechText;
 }
 
+function getRandomQuestionAndSave(handlerInput){
+  const oneQuestion = getRandomItem(preguntas.PREGUNTAS);
+  SessionState.setCurrentQuestion(handlerInput, oneQuestion);
+  return oneQuestion;
+}
 
 function getCorrectLetter(q) {
   let i = 0;
@@ -69,10 +59,22 @@ function getCorrectLetter(q) {
   return null; // caso imposible. Todas las preguntas tienen una opción correcta.
 }
 
-
 function simpleApl(handlerInput, speechText) {
   return AplTemplates.getAplTextAndHintOrVoice(handlerInput, handlerInput.t.SKILL_NAME,
     speechText, handlerInput.t.HINT_HOME, speechText);
+}
+
+function questionApl(handlerInput, speechText) {
+  const question = getRandomQuestionAndSave(handlerInput)
+  const categoryName = getCategoriaName(question)
+  speechText += `Pregunta ${categoryName}. `;
+  speechText += preguntaToString(question);
+
+  return AplTemplates.getAplQuestion(handlerInput,question.enunciado,`Pregunta ${categoryName}`,respuestasToArray(question),speechText);
+}
+
+function titleApl(handlerInput, speechText) {
+  return AplTemplates.getAplTitle(handlerInput,handlerInput.t.SKILL_NAME,handlerInput.t.WELCOME_TO,handlerInput.t.DI_JUGAR,speechText)
 }
 
 
@@ -83,7 +85,7 @@ const LaunchRequestHandler = {
   async handle(handlerInput) {
     SessionState.setCurrentState(handlerInput, SessionState.STATES.LAUNCH);
 
-    return simpleApl(handlerInput, `${handlerInput.t.WELCOME_TO}. ${handlerInput.t.HELP}`);
+    return titleApl(handlerInput, `${handlerInput.t.WELCOME_TO}. ${handlerInput.t.HELP}`);
   },
 };
 
@@ -97,9 +99,7 @@ const JugarIntentHandler = {
     SessionState.setCurrentState(handlerInput, SessionState.STATES.PLAYING);
     let speechText = '¡Jugamos! ';
 
-    speechText += getRandomQuestionSpeechAndSave(handlerInput);
-
-    return simpleApl(handlerInput, speechText);
+    return questionApl(handlerInput, speechText);
   },
 };
 
@@ -111,12 +111,9 @@ const NextIntentHandler = {
   },
   handle(handlerInput) {
     SessionState.setCurrentState(handlerInput, SessionState.STATES.PLAYING);
-
     let speechText = 'Ok, pasamos a la siguiente pregunta. ';
 
-    speechText += getRandomQuestionSpeechAndSave(handlerInput);
-
-    return simpleApl(handlerInput, speechText);
+    return questionApl(handlerInput, speechText);
   },
 };
 
@@ -231,11 +228,7 @@ exports.handler = skillBuilder
     RepeatIntentHandler,
     RespuestaIntentHandler,
 
-    // AplUserEventHandler.EventHandler, // taps en pantalla APL (ver APL list en HelpIntentHandler)
-
-    dynamicEntitiesHandlers.UpdateJokeCategoriesIntentHandler, // dynamic entity sample
-    dynamicEntitiesHandlers.ClearDynamicEntitiesIntentHandler,
-    dynamicEntitiesHandlers.TellJokeIntentHandler,
+    AplUserEventHandler.EventHandler, // taps en pantalla APL (ver APL list en HelpIntentHandler)
 
     GlobalHandlers.CancelAndStopIntentHandler,
     GlobalHandlers.FallbackIntentHandler, // to Respond Gracefully to Unexpected Customer Requests

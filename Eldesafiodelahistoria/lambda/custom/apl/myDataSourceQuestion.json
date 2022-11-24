@@ -1,0 +1,18 @@
+{
+    "multipleChoiceTemplateData": {
+        "type": "object",
+        "properties": {
+            "backgroundImage": "https://d2o906d8ln7ui1.cloudfront.net/images/response_builder/background-blue.png",
+            "titleText": "<category>",
+            "primaryText": "<question>",
+            "choices": [
+                "<choice1>",
+                "<choice2>",
+                "<choice3>"
+            ],
+            "choiceListType": "alphabet",
+            "headerAttributionImage": "https://www.rah.es/wp-content/uploads/2020/06/Logo-RAH-Web.png",
+            "footerHintText": "Di la opción que crees correcta, \"la A\", \"la B\", o \"la C\", Suerte!"
+        }
+    }
+}
