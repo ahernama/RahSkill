@@ -8,6 +8,7 @@ const GlobalHandlers = require('./handlers/globalHandlers'); // ErrorHandler, Se
 const AplUserEventHandler = require('./handlers/aplUserEventHandler');
 
 const preguntas = require('./data/preguntas-trivial');
+const sfx = require('./data/sfx');
 
 function capitalizeFirstLetter(s) {
   return s.charAt(0).toUpperCase() + s.slice(1);
@@ -59,13 +60,27 @@ function getCorrectLetter(q) {
   return null; // caso imposible. Todas las preguntas tienen una opción correcta.
 }
 
-function simpleApl(handlerInput, speechText) {
-  return AplTemplates.getAplTextAndHintOrVoice(handlerInput, handlerInput.t.SKILL_NAME,
-    speechText, handlerInput.t.HINT_HOME, speechText);
+function getCorrectAnswer(q) {
+  let i = 0;
+  for (const one of q.respuestas) { // eslint-disable-line no-restricted-syntax
+    if (one.correcta === true) {
+      return one.respuesta
+    }
+    i += 1;
+  }
+  return null; // caso imposible. Todas las preguntas tienen una opción correcta.
+}
+
+function messageApl(handlerInput, speechText) {
+  return AplTemplates.getAplMessage(handlerInput,speechText,handlerInput.t.HINT_HOME,speechText)
 }
 
 function questionApl(handlerInput, speechText) {
   const question = getRandomQuestionAndSave(handlerInput)
+  return questionAplWithQuestion(handlerInput,speechText,question);
+}
+
+function questionAplWithQuestion(handlerInput, speechText, question) {
   const categoryName = getCategoriaName(question)
   speechText += `Pregunta ${categoryName}. `;
   speechText += preguntaToString(question);
@@ -74,7 +89,11 @@ function questionApl(handlerInput, speechText) {
 }
 
 function titleApl(handlerInput, speechText) {
-  return AplTemplates.getAplTitle(handlerInput,handlerInput.t.SKILL_NAME,handlerInput.t.WELCOME_TO,handlerInput.t.DI_JUGAR,speechText)
+  return AplTemplates.getAplTitle(handlerInput,handlerInput.t.SKILL_NAME,handlerInput.t.WELCOME_TO,handlerInput.t.DI_JUGAR,speechText,false,"")
+}
+
+function answerApl(handlerInput, speechText,title,desc,help,url) {
+  return AplTemplates.getAplTitle(handlerInput,title,desc,help,speechText,true,url)
 }
 
 
@@ -84,8 +103,9 @@ const LaunchRequestHandler = {
   },
   async handle(handlerInput) {
     SessionState.setCurrentState(handlerInput, SessionState.STATES.LAUNCH);
-
-    return titleApl(handlerInput, `${handlerInput.t.WELCOME_TO}. ${handlerInput.t.HELP}`);
+    var welcomeTone = sfx.launchTones[Math.floor(Math.random() * sfx.launchTones.length)];
+    let launchMessage = `${welcomeTone} ${handlerInput.t.WELCOME_TO}. ${handlerInput.t.HELP}`;
+    return titleApl(handlerInput, launchMessage);
   },
 };
 
@@ -124,11 +144,10 @@ const RespuestaIntentHandler = {
       && handlerInput.requestEnvelope.request.intent.name === 'RespuestaIntent';
   },
   handle(handlerInput) {
-    let speech = '';
+    
     const lastQuestion = SessionState.getCurrentQuestion(handlerInput);
     if (!lastQuestion) {
-      speech = `Uy qué raro, creo que no te he preguntado nada aún. ${handlerInput.t.DI_JUGAR}`;
-      return simpleApl(handlerInput, speech);
+      return messageApl(handlerInput,`Uy qué raro, creo que no te he preguntado nada aún. ${handlerInput.t.DI_JUGAR}`);
     }
 
     SessionState.setCurrentState(handlerInput, SessionState.STATES.PLAYING);
@@ -141,28 +160,22 @@ const RespuestaIntentHandler = {
       && itemSlot.resolutions.resolutionsPerAuthority[0].values
       && itemSlot.resolutions.resolutionsPerAuthority[0].values[0].value.name
     ) {
-      /* Guardamos la opción elegida por el usuario (A, B, C...); no lo que ha pronunciado.
-      Es decir, sí ha pronunciado "be" lo que nos guardamos es "B".
-      Esto lo podemos hacer porque a la hora de crear el modelo, hemos definido "be"
-      como sinónimo de "B".
-        */
       itemNameMatched = itemSlot.resolutions.resolutionsPerAuthority[0].values[0].value.name;
     } else {
-      // caso posible si no hay match.
-      return simpleApl(handlerInput, 'No te he entendido, repite por favor.');
+      return messageApl(handlerInput,'No te he entendido, repite por favor.');
     }
 
+    let titleMessage = '';
     if (itemNameMatched === getCorrectLetter(lastQuestion)) {
-      speech = '¡Correcto!';
+      var rightTone = sfx.rightSounds[Math.floor(Math.random() * sfx.rightSounds.length)];
+      titleMessage = `${rightTone} ¡Correcto! `;
     } else {
-      speech = '¡Error!';
+      var wrongTone = sfx.wrongSounds[Math.floor(Math.random() * sfx.wrongSounds.length)];
+      titleMessage = `${wrongTone} ¡Error! la respuesta correcta era ${getCorrectAnswer(lastQuestion)}. `;
     }
-    speech += ` ${capitalizeFirstLetter(lastQuestion.aclaracion)} <break time="2s"/>`;
-    speech += ' Siguiente pregunta. ';
+    let contentMessge = ` ${capitalizeFirstLetter(lastQuestion.aclaracion)} <break time="1s"/>`;
 
-    speech += getRandomQuestionSpeechAndSave(handlerInput);
-
-    return simpleApl(handlerInput, speech);
+    return answerApl(handlerInput,titleMessage+contentMessge+handlerInput.t.DI_SIGUIENTE,titleMessage,contentMessge,handlerInput.t.DI_SIGUIENTE,lastQuestion.url);
   },
 };
 
@@ -173,24 +186,21 @@ const RepeatIntentHandler = {
       && handlerInput.requestEnvelope.request.intent.name === 'AMAZON.RepeatIntent';
   },
   handle(handlerInput) {
-    let speech = '';
     let lastQuestion = null;
     const status = SessionState.getCurrentState(handlerInput);
     switch (status) {
       case SessionState.STATES.LAUNCH:
-        return simpleApl(handlerInput, `${handlerInput.t.WELCOME_TO}. ${handlerInput.t.HELP}`);
+        return messageApl(handlerInput, `${handlerInput.t.WELCOME_TO}. ${handlerInput.t.HELP}`);
       case SessionState.STATES.HELP:
-        return simpleApl(handlerInput, handlerInput.t.HELP);
+        return messageApl(handlerInput, handlerInput.t.HELP);
       case SessionState.STATES.PLAYING:
         lastQuestion = SessionState.getCurrentQuestion(handlerInput);
         if (!lastQuestion) {
-          speech = `Uy qué raro, he olvidado la pregunta. ${handlerInput.t.DI_JUGAR}`; // caso imposible
-        } else {
-          speech = `Repito la pregunta: ${preguntaToString(lastQuestion)}`;
+          return messageApl(handlerInput,`Uy qué raro, he olvidado la pregunta. ${handlerInput.t.DI_JUGAR}`);
         }
-        return simpleApl(handlerInput, speech);
+        return questionAplWithQuestion(handlerInput,'Te repito la pregunta ', lastQuestion);
       default:
-        return simpleApl(handlerInput, `No tengo nada que repetir. ${handlerInput.t.DI_JUGAR}`); // caso imposible
+        return messageApl(handlerInput,`No tengo nada que repetir. ${handlerInput.t.DI_JUGAR}`);
     }
   },
 };
@@ -204,7 +214,7 @@ const HelpIntentHandler = {
   handle(handlerInput) {
     SessionState.setCurrentState(handlerInput, SessionState.STATES.HELP);
 
-    return simpleApl(handlerInput, handlerInput.t.HELP);
+    return messageApl(handlerInput, handlerInput.t.HELP);
   },
 };
 
@@ -212,8 +222,7 @@ const HelpIntentHandler = {
 // Initialize 'handlerInput.t' with user language or default language.
 const myLocalizationInterceptor = {
   process(handlerInput) {
-    // const langUser = handlerInput.requestEnvelope.request.locale;
-    handlerInput.t = require('./strings/es'); // eslint-disable-line import/no-dynamic-require, no-param-reassign
+    handlerInput.t = require('./strings/es'); 
   },
 };
 

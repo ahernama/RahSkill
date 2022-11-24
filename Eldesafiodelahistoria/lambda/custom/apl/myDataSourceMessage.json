@@ -1,0 +1,27 @@
+{
+    "headlineTemplateData": {
+        "type": "object",
+        "objectId": "headlineSample",
+        "properties": {
+            "backgroundImage": {
+                "contentDescription": null,
+                "smallSourceUrl": null,
+                "largeSourceUrl": null,
+                "sources": [
+                    {
+                        "url": "https://d2o906d8ln7ui1.cloudfront.net/images/response_builder/background-blue.png",
+                        "size": "large"
+                    }
+                ]
+            },
+            "textContent": {
+                "primaryText": {
+                    "type": "PlainText",
+                    "text": "Welcome to The Daily Plant Facts"
+                }
+            },
+            "logoUrl": "https://www.rah.es/wp-content/uploads/2020/06/Logo-RAH-Web.png",
+            "hintText": "Try, \"Alexa, what is the plant fact of the day?\""
+        }
+    }
+}
