@@ -8,10 +8,6 @@
 
 **Nota:** Si estás pensando en desarrollar una nueva Skill en Español y quieres guiarte por este ejemplo, te recomiendo que eches un vistazo al [artículo en medium](https://planetachatbot.com/conversacion-alexa-espanol-6e90ae9401b) que publiqué para iniciarte en modelos de conversación y no tener problemas a la hora de pasar el proceso de certificación de Amazon.
 
-## Video
-
-<video src="RAHLanding/assets/videos/video_alexa.mov" type="video/mp4" />
-
 ### Uso
 
 ```text
